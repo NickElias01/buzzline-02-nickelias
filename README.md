@@ -1,21 +1,20 @@
-# buzzline-02-case
+# buzzline-02-nickelias
+## Elias Analytics - Kafka Consumer Project
 
-Streaming data is often too big for any one machine. 
-A streaming platform helps organize our pipelines.
+This project implements a Kafka consumer that consumes messages from a specified Kafka topic and processes them. It uses environment variables for configuration, including the Kafka topic name and consumer group ID. The consumer processes each incoming message by logging it and checking for specific patterns (e.g., "Alert:", "Warning:", "Error:"). If a matching pattern is found, it logs a warning.
 
-A common pattern for managing streaming pipelines is publish-subscribe, similar to how Twitter operates:
+### Key Features:
+- Consumes messages from a Kafka topic.
+- Logs and processes messages with detailed information.
+- Alerts on messages containing specific patterns such as "Alert:", "Warning:", or "Error:".
+- Easily configurable through environment variables (`KAFKA_TOPIC`, `KAFKA_CONSUMER_GROUP_ID_JSON`).
 
-- Producers publish streaming information.
-- Consumers subscribe to specific "topics" to process, analyze, and generate alerts based on detected conditions.
+This script is designed for use with Python-based Kafka consumers and integrates environment configuration with a logging system.
 
-In this project, we use Apache Kafka, a popular, open-source streaming platform.
-We write producers that send data to topics and consumers that read from topics.
 
-> Kafka needs space - it's big. We'll use the Windows Subsystem for Linux on Windows machines. 
+## Install and Start Kafka (using WSL if Windows)
 
-## Task 1. Install and Start Kafka (using WSL if Windows)
-
-Before starting, ensure you have completed the setup tasks in <https://github.com/denisecase/buzzline-01-case> first. 
+Before starting, please reference the setup tasks in <https://github.com/denisecase/buzzline-01-case> first. 
 Python 3.11 is required. 
 
 In this task, we will download, install, configure, and start a local Kafka service. 
@@ -55,13 +54,13 @@ Use the commands below to activate .venv, and start the producer.
 Windows:
 ```shell
 .venv\Scripts\activate
-py -m producers.kafka_producer_case
+py -m producers.kafka_producer_nickelias
 ```
 
 Mac/Linux:
 ```zsh
 source .venv/bin/activate
-python3 -m producers.kafka_producer_case
+python3 -m producers.kafka_producer_nickelias
 ```
 
 ## Task 5. Start a Kafka Consumer
@@ -74,13 +73,13 @@ Use the commands below to activate .venv, and start the consumer.
 Windows:
 ```shell
 .venv\Scripts\activate
-py -m consumers.kafka_consumer_case
+py -m consumers.kafka_consumer_nickelias
 ```
 
 Mac/Linux:
 ```zsh
 source .venv/bin/activate
-python3 -m consumers.kafka_consumer_case
+python3 -m consumers.kafka_consumer_nickelias
 ```
 
 ## Later Work Sessions
