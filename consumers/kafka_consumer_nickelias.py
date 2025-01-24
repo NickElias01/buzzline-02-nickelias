@@ -10,6 +10,7 @@ Consume messages from a Kafka topic and process them.
 
 # Import packages from Python Standard Library
 import os
+import re
 
 # Import external packages
 from dotenv import load_dotenv
@@ -36,7 +37,7 @@ def get_kafka_topic() -> str:
     return topic
 
 
-def get_kafka_consumer_group_id() -> int:
+def get_kafka_consumer_group_id() -> str:
     """Fetch Kafka consumer group id from environment or use default."""
     group_id: str = os.getenv("KAFKA_CONSUMER_GROUP_ID_JSON", "default_group")
     logger.info(f"Kafka consumer group id: {group_id}")
@@ -60,6 +61,23 @@ def process_message(message: str) -> None:
         message (str): The message to process.
     """
     logger.info(f"Processing message: {message}")
+
+
+#####################################
+# Define a function to alert on specific patterns
+# #####################################
+
+# Define alert_on_pattern function
+def alert_on_pattern(message):
+    """
+    Check for specific patterns in the message and alert if found.
+
+    Args:
+        message (str): The message to check.
+    """
+    if re.search(r'Alert:|Warning:|Error:', message):
+        logger.warning(f"ALERT: {message}")
+
 
 
 #####################################
@@ -92,6 +110,7 @@ def main() -> None:
             message_str = message.value
             logger.debug(f"Received message at offset {message.offset}: {message_str}")
             process_message(message_str)
+            alert_on_pattern(message_str)
     except KeyboardInterrupt:
         logger.warning("Consumer interrupted by user.")
     except Exception as e:
